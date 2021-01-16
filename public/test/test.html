@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>SpeakScribe</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.9.2.css">
+    <script src="../commands.js" defer></script>
+    <script src="../utils.js" defer></script>
+    <script src="../script.js" defer></script>
+    <script src="../addons/custom-commands-runner.js" defer></script>
+    <script src="../addons/docx.js" defer></script>
+    <script src="../addons/emoji-json.js" defer></script>
+    <script src="../addons/font-size.js" defer></script>
+    <script src="../addons/multiple-files.js" defer></script>
+    <script src="../addons/rtf.js" defer></script>
+    <script src="../addons/themes.js" defer></script>
+
+    <script src="https://code.jquery.com/qunit/qunit-2.9.2.js"></script>
+    <script src="./tests.js"></script>
+  </head>
+  <body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+    <div id="content-container">
+      <header>
+        <h1>BD testing fixture</h1>
+        <span id="pending-text-top">
+        </span>
+      </header>
+      <div id="writing-area-container">
+        <label for="settings-checkbox" id="settings-label">
+          <img width="32" height="32" src="/assets/baseline-settings-20px.svg" alt="Settings">
+        </label>
+        <div id="settings">
+          <div class="setting-item" style="display: none;" id="themes-setting-item">
+            <select name="theme" id="theme">
+              <option value="light">Light theme</option>
+              <option value="dark">Dark theme</option>
+            </select>
+          </div>
+          <div class="setting-item">
+            <input type="checkbox" name="show-pending-text" id="show-pending-text">
+            <label for="show-pending-text">Show pending text in textbox while speaking</label>
+          </div>
+          <div class="setting-item">
+            <label for="text-dir">Text direction</label>
+            <select name="text-dir" id="text-dir">
+              <option value="ltr">Left to right</option>
+              <option value="rtl">Right to left</option>
+            </select>
+          </div>
+          <div class="setting-item">
+            <input type="checkbox" name="voice-commands" id="voice-commands">
+            <label for="voice-commands">Enable voice commands</label>
+            <div>
+              <a href="all-commands.html" target="bd-commands">All commands</a>
+            </div>
+          </div>
+          <div class="setting-item" style="display: none;" id="custom-commands-settings-item">
+            <a href="custom-commands.html" id="setup-custom-commands-link">Modify custom replacements</a>
+          </div>
+          <div class="setting-item">
+            <input type="checkbox" name="autosave" id="autosave">
+            <label for="autosave">Keep text contents after reloading</label>
+          </div>
+          <div class="setting-item" id="font-size-settings-item" style="display: none;"> 
+            <label for="font-size">Font size (points)</label>
+            <input type="number" name="font-size" id="font-size" min="5" max="200" step="1" placeholder="12">
+          </div>
+          <div class="setting-item" id="backup-item" style="display: none;">
+            <button id="backup-button">
+              Backup all your files
+            </button>
+          </div>
+          <div class="setting-item">
+            <label for="lang">Language</label>
+            <select name="lang" id="lang">
+              <option value="en" autofocus>English</option>
+              <option value="aa">Afar</option>
+              <option value="zu">Zulu</option>
+            </select>
+            <div class="note">Note: not all languages may be supported by your browser</div>
+          </div>
+        </div>
+        <textarea placeholder="input textarea" id="dictation-text"></textarea>
+        <div id="pending-text-overlay"></div>
+        <div id="microphone">
+          <img src="/assets/baseline-mic-24px.svg" id="mic-img" alt="Start recording">
+        </div>
+        <div id="reset" class="mic-side">
+          <img src="/assets/baseline-delete-24px.svg" class="mic-side-img" alt="Delete everything">
+        </div>
+        <div id="download" class="mic-side">
+          <img src="/assets/baseline-file_copy-24px.svg" class="mic-side-img" alt="Export">
+        </div>
+      </div>
+    </div>
+    <div id="cover-overlay"></div>
+    <div id="custom-commands-diag" class="diag">
+      <iframe src="about:blank" id="custom-commands-iframe"></iframe>
+    </div>
+    <div id="export-diag" class="diag">
+      <h2>Export</h2><span id="export-x">x</span>
+      <ul>
+        <li id="text-export">to text file (.txt)</li>
+        <li id="clipboard-export">to clipboard</li>
+        <li id="print-export">to printer</li>
+        <li id="docx-export" style="display: none;">to Word file</li>
+        <li id="rtf-export" style="display: none;">to RTF file</li>
+      </ul>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,472 @@
+/* http://meyerweb.com/eric/tools/css/reset/ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt,
+var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video,
+textarea {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Our rules */
+body {
+  height: 100vh;
+  overflow: hidden;
+  font-family: sans-serif;
+}
+
+header {
+  border-bottom: 1px solid black;
+}
+
+h1 {
+  font-weight: bold;
+  font-size: 1.5em;
+  margin-left: 0.3333em;
+  display: inline;
+}
+
+textarea, #pending-text-overlay {
+  margin-top: 0.5rem;
+  width: calc(100% - 1.32rem - 2rem);
+  resize: none;
+  font-family: sans-serif;
+  outline: none;
+  border-left: 0.66rem solid white;
+  border-right: 0.66rem solid white;
+  height: calc(100vh - 1px - 1.5rem - 0.5rem - 4px - 5rem - 1rem);
+  position: absolute;
+  transition-property: width, left, right, opacity;
+  transition-duration: 0s;
+}
+
+
+#pending-text-overlay {
+  z-index: 2;
+  display: none;
+  pointer-events: none;
+  color: #0c18ce;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+#settings-checkbox:checked ~ textarea {
+  width: calc(100% - 1.32rem - 2rem - 18rem);
+}
+
+#settings-checkbox:checked ~ #pending-text-overlay {
+  width: calc(100% - 1.32rem - 2rem - 18rem);
+}
+
+#settings-checkbox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0;
+  width: 0;
+  margin: 0;
+  opacity: 0;
+}
+
+#settings-label {
+  position: absolute;
+  background-color: #aeaeae;
+  height: calc(100vh - 1px - 1.5em);
+  width: 2em;
+  cursor: pointer;
+  right: 0;
+  word-break: break-word;
+  border-top-left-radius: 1em;
+  border-bottom-left-radius: 1em;
+  transition: right 0.5s;
+}
+
+.close-link {
+  display: block;
+  margin-bottom: 1em;
+  color: blue;
+  margin-left: 0.66em;
+  margin-top: 0.5em;
+  cursor: pointer;
+}
+
+#writing-area-container {
+  position: relative;
+  height: 100%;
+}
+
+#settings {
+  position: absolute;
+  background-color: #63f981;
+  height: calc(100vh - 1px - 1.5em);
+  width: 18em;
+  right: -18em;
+  transition-property: right, visibility;
+  transition-duration: 0.5s;
+  visibility: hidden;
+  background: #ffbc70;
+}
+
+.setting-item {
+  margin-bottom: 1em;
+  margin-left: 0.67em;
+}
+
+#settings select {
+  margin-top: 0.2em;
+  max-width: 75%;
+}
+
+#settings-checkbox:checked ~ #settings {
+  visibility: visible;
+  right: 0;
+}
+
+#settings-checkbox:checked ~ #settings-label {
+  right: 18em;
+}
+
+#microphone {
+  z-index: 3;
+  height: 7.5em;
+  width: 7.5em;
+  background-color: #ffc252;
+  border-radius: 50%;
+  margin: 0 auto;
+  cursor: pointer;
+  position: fixed;
+  transition: opacity 0.33s;
+  bottom: 0.6em;
+  left: calc(50% - (7.5em / 2));
+  transition-property: opacity, background-color;
+  transition-duration: 0.5s;
+}
+
+#microphone:hover {
+  background-color: orange;
+}
+
+#mic-img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 5em;
+  width: 5em;
+  top: 1.3em;
+  position: relative;
+}
+
+.mic-side-img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 3.5em;
+  width: 3.5em;
+  top: 1em;
+  position: relative;
+}
+
+@keyframes recording-blink {
+  from {
+    background-color: #e85a5a;
+  }
+  to {
+    background-color: #c11111;
+  }
+}
+
+#microphone.recording {
+  background-color: red;
+  animation-name: recording-blink;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: cubic-bezier(0, 0.33, 1, 0.67);
+}
+
+@keyframes expand-ring {
+  from {
+    opacity: 1;
+    height: 7.5em;
+    width: 7.5em;
+    border: 1.2em solid red;
+    left: calc(50% - (7.5em / 2) - 1.2em);
+  }
+
+  to {
+    opacity: 0;
+    height: 16.7em;
+    width: 16.7em;
+    border: 0.8em solid red;
+    left: calc(50% - (16.7em / 2) - 0.8em);
+  }
+}
+
+.mic-ring {
+  z-index: 4;
+  border-radius: 50%;
+  margin: 0 auto;
+  cursor: pointer;
+  position: absolute;
+  transition: opacity 0.33s;
+  bottom: 0;
+  transition: 4s;
+  animation-name: expand-ring;
+  animation-duration: 1.5s;
+  animation-timing-function: linear;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mic-side {
+  z-index: 3;
+  height: 5.5em;
+  width: 5.5em;
+  background-color: #ffe873;
+  border-radius: 50%;
+  margin: 0 auto;
+  cursor: pointer;
+  position: fixed;
+  bottom: 0.2em;
+  transition-property: opacity;
+  transition-duration: 0.5s;
+}
+
+#reset {
+  left: calc(50% - 9.8em);
+}
+
+#download {
+  left: calc(50% + 3.75em + 0.5em);
+}
+
+#download .mic-side-img {
+  height: 3.2em;
+  width: 3.2em;
+  padding-left: 0.3em;
+}
+
+#pending-text-top {
+  z-index: 2;
+  position: absolute;
+  right: 2.18em;
+  text-align: right;
+  color: #0c18ce;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0; /* if the calc gives a negative value the rule will be invalid */
+  width: calc(100vw - 22em);
+  direction: rtl;
+  height: 1.4em;
+  white-space: pre;
+}
+
+.note {
+  font-style: italic;
+}
+
+#content-container {
+  height: 100%;
+  transition-property: filter;
+  transition-duration: 0.7s;
+}
+
+body.covered #content-container {
+  filter: blur(7px);
+}
+
+#cover-overlay {
+  opacity: 0;
+  display: none;
+  transition-property: opacity;
+  transition-duration: 0.7s;
+  height: 100vh;
+  width: 100vw;
+}
+
+body.covered #cover-overlay {
+  display: block;
+  height: 100vh;
+  width: 100vw;
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  background-color: rgba(128, 128, 128, 0.4);
+  opacity: 1;
+  cursor: pointer;
+}
+
+#export-diag h2 {
+  font-weight: bold;
+  font-size: 1.6em;
+  display: inline;
+}
+
+#export-diag ul {
+  margin-top: 0.5em;
+}
+
+#export-x {
+  float: right;
+  padding-right: 0.8rem;
+  cursor: pointer;
+  color: #5b5b5b;
+  font-size: 1.5em;
+}
+
+#export-diag li {
+  margin-left: 0.6em;
+  color: blue;
+  cursor: pointer;
+  margin-bottom: 0.5em;
+  width: fit-content;
+}
+
+#export-diag li:hover {
+  text-decoration: underline;
+}
+
+.diag {
+  opacity: 0;
+  display: none;
+  transition-property: opacity, display;
+  transition-duration: 0.5s;
+  z-index: 101;
+  background-color: white;
+  border-radius: 10px;
+  position: absolute;
+  top: 5em;
+}
+
+body.covered #custom-commands-diag {
+  top: 2em;
+  width: 445px;
+  margin-left: calc(50% - (445px / 2));
+  height: calc(100vh - 2em - 1.5em);
+}
+
+#custom-commands-diag iframe {
+  width: 100%;
+  height: 100%;
+}
+
+#export-diag {
+  width: 20em;
+  margin-left: calc(50% - (20em / 2));
+  padding-left: 0.7em;
+  padding-top: 0.3em;
+  padding-bottom: 1em;
+}
+
+body.covered.show-export-diag #export-diag {
+  display: block;
+  opacity: 1;
+}
+body.covered.show-custom-commands-diag #custom-commands-diag {
+  display: block;
+  opacity: 1;
+}
+
+@media (max-width: 500px) {
+  #settings-checkbox:checked ~ textarea, #settings-checkbox:checked ~ #pending-text-overlay {
+    /* gets too small */
+    opacity: 0;
+    border: none;
+  }
+  #settings-checkbox:checked ~ #microphone, #settings-checkbox:checked ~ .mic-side {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 450px) {
+  body.covered .diag {
+    width: 100vw !important;
+    height: 100vh !important;
+    border-radius: 0;
+    top: 0 !important;
+    left: 0 !important;
+    margin: 0 !important;
+  }
+  #export-x {
+    padding-right: 1.5rem;
+  }
+}
+
+@media (max-width: 325px) {
+  #settings {
+    width: 100vw;
+  }
+}
+
+@media print {
+  body.covered #cover-overlay,
+  body.covered .diag,
+  #microphone,
+  .mic-side,
+  #settings-label,
+  #files-label,
+  header {
+    filter: none !important;
+    display: none !important;
+  }
+  body.covered #content-container {
+    filter: none;
+  }
+  body.dark {
+    background: black;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+.base-color {
+  color: black;
+}
+
+#font-size {
+  width: 5em;
+}
+
+.header-link a, .header-link {
+  font-size: 1.2em;
+  padding-bottom: 0.1em;
+  display: inline;
+  text-decoration: none;
+}

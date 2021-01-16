@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Custom Commands Setup</title>
+    <link rel="canonical" href="https://speakscribe.com/custom-commands.html" />
+    <meta name="viewport" content="width=device-width">
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 0;
+        margin-left: 8px;
+        margin-bottom: 1em;
+      }
+      h1 {
+        margin-top: 0;
+        margin-bottom: 0;
+        display: inline;
+      }
+      table {
+        border-spacing: 0;
+        margin-top: 1em;
+      }
+      th, td {
+        text-align: left;
+      }
+      #x {
+        float: right;
+        padding-right: 0.8rem;
+        cursor: pointer;
+        color: #5b5b5b;
+        font-size: 1.5em;
+        margin-top: 8px;
+      }
+      @media (max-width: 415px) {
+        input {
+          width: calc(50vw - 4px - 2px - 1px - 6px);
+        }
+      }
+      body.dark {
+        color: white;
+      }
+      body.dark input {
+        border: 2px solid #606271;
+        color: white;
+        background: rgb(35, 35, 39);
+      }
+      body.dark #x {
+        color: #dadada;
+      }
+    </style>
+    <link rel="icon" href="/assets/favicon.png">
+    <script src="custom-commands.js" defer></script>
+  </head>
+  <body>
+    <h1>Custom Replacements</h1>
+    <span id="x">X</span>
+    <table>
+      <thead>
+        <tr>
+          <th>Command</th>
+          <th>Replace with...</th>
+        </tr>
+      </thead>
+      <tbody id="command-list">
+        
+      </tbody>
+    </table>
+  </body>
+</html>
